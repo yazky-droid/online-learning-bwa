@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 class FrontController extends Controller
 {
     public function index(){
-        return view('front.index');
+        
+        $courses = Course::with(['category', 'teacher', 'students'])->orderByDesc('id')->get();
+
+        return view('front.index', compact('courses'));
     }
 
     public function details(Course $course){
