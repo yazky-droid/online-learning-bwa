@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     // must be logged in before create a transaction
     Route::get('/checkout', [FrontController::class, 'checkout'])->name('front.checkout')->middleware('role:student');
 
-    Route::get('/checkout/store', [FrontController::class, 'checkout_store'])->name('front.checkout.store')->middleware('role:student');
+    Route::post('/checkout/store', [FrontController::class, 'checkout_store'])->name('front.checkout.store')->middleware('role:student');
 
     // e.g: domain.com/learning/100/5 = belajar javascript pemula
     Route::get('/learning/{course}/{courseVideoId}', [FrontController::class, 'learning'])->name('front.learning')
