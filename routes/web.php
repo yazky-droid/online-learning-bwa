@@ -22,21 +22,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
+    
     // must be logged in before create a transaction
     Route::get('/checkout', [FrontController::class, 'checkout'])->name('front.checkout')->middleware('role:student');
-
+    
     Route::post('/checkout/store', [FrontController::class, 'checkout_store'])->name('front.checkout.store')->middleware('role:student');
 
     // e.g: domain.com/learning/100/5 = belajar javascript pemula
     Route::get('/learning/{course}/{courseVideoId}', [FrontController::class, 'learning'])->name('front.learning')
     ->middleware('role:student|teacher|owner');
-
+    
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('categories', CategoryController::class)
         ->middleware('role:owner');
-
+        
         Route::resource('teachers', TeacherController::class)
         ->middleware('role:owner');
         
@@ -58,7 +57,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:owner|teacher');
         
     });
-
+    
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+});
+    
 require __DIR__.'/auth.php';
